@@ -5,6 +5,7 @@ var ws = require('ws.js')
   , Http = ws.Http
   , Mtom = ws.Mtom
 var config = require('./config')
+var path = require('path')
 
 var options;
 
@@ -22,7 +23,7 @@ function setDokumenter() {
   options.dokumenter.forEach(function(dokument){
     dokumenter += '<dokumenter>' +
                   '<data></data>' +
-                  '<filnavn>' + dokument.filnavn + '</filnavn>' +
+                  '<filnavn>' + path.basename(dokument.filsti) + '</filnavn>' +
                   '<mimetype>' + dokument.mimetype + '</mimetype>' +
                   '</dokumenter>'
   });

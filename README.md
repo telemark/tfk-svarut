@@ -19,12 +19,10 @@ var options = {
                  },
                  tittel: 'Vedtak om fri skoleskyss',
                  dokumenter : [
-                   { filnavn: 'skoleskyss_kvittering.pdf',
-                     filsti: 'data/skoleskyss_kvittering.pdf',
+                   { filsti: 'data/skoleskyss_kvittering.pdf',
                      mimetype: 'application/pdf'
                    },
-                   { filnavn: 'skoleskyss_positivt_vedtak.pdf',
-                     filsti: 'data/skoleskyss_positivt_vedtak.pdf',
+                   { filsti: 'data/skoleskyss_positivt_vedtak.pdf',
                      mimetype: 'application/pdf'
                    }
                  ]
