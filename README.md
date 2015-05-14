@@ -1,9 +1,33 @@
 # tfk-svarut
-SvarUt for digitale skjemaer
+SvarUt for digitale skjemaer.
+
+## Installation
+```
+$ git clone git@github.com:telemark/tfk-svarut.git
+```
+
+## Setup
+```
+$ npm run setup
+```
+
+## Test
+```
+$ npm test
+```
+
+## Build
+```
+$ npm run build
+```
+
+## Usage
 
 ```
-npm install
+$ npm install
 ```
+
+## Example
 
 ```javascript
 'use strict';
