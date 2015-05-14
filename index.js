@@ -10,11 +10,21 @@ var path = require('path');
 var options;
 
 function setMottaker() {
-  var mottaker = '<navn>' + options.mottaker.navn + '</navn>' +
-                 '<adresse1>' + options.mottaker.adresse1 + '</adresse1>' +
-                 '<postnr>' + options.mottaker.postnr + '</postnr>' +
-                 '<poststed>' + options.mottaker.poststed + '</poststed>' +
-                 '<fodselsnr>' + options.mottaker.fodselsnr + '</fodselsnr>'
+  var mottaker = '<navn>' +
+                 options.mottaker.navn +
+                 '</navn>' +
+                 '<adresse1>' +
+                 options.mottaker.adresse1 +
+                 '</adresse1>' +
+                 '<postnr>' +
+                 options.mottaker.postnr +
+                 '</postnr>' +
+                 '<poststed>' +
+                 options.mottaker.poststed +
+                 '</poststed>' +
+                 '<fodselsnr>' +
+                 options.mottaker.fodselsnr +
+                 '</fodselsnr>'
   return mottaker
 }
 
@@ -22,9 +32,14 @@ function setDokumenter() {
   var dokumenter = '';
   options.dokumenter.forEach(function(dokument) {
     dokumenter += '<dokumenter>' +
-                  '<data></data>' +
-                  '<filnavn>' + path.basename(dokument.filsti) + '</filnavn>' +
-                  '<mimetype>' + dokument.mimetype + '</mimetype>' +
+                  '<data>' +
+                  '</data>' +
+                  '<filnavn>' +
+                  path.basename(dokument.filsti) +
+                  '</filnavn>' +
+                  '<mimetype>' +
+                  dokument.mimetype +
+                  '</mimetype>' +
                   '</dokumenter>';
   });
   return dokumenter
