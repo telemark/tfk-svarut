@@ -138,14 +138,12 @@ function SvarUt(opts, callback) {
   this.ctx = buildRequest();
 
   addFiles(this.ctx);
-
   send(this.ctx, function(page) {
     if (!page || !page.response) {
       return callback('Error: Something wrong happend', null);
-    } else {
-      id = S(page.response).between('<return>', '</return>').s;
-      return callback(null, id);
     }
+    id = S(page.response).between('<return>', '</return>').s;
+    return callback(null, id);
   });
 }
 
