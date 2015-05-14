@@ -1,11 +1,11 @@
 'use strict'
 
-var S = require('string')
-var ws = require('ws.js')
-  , Http = ws.Http
-  , Mtom = ws.Mtom
-var config = require('./config')
-var path = require('path')
+var S = require('string');
+var ws = require('ws.js');
+var Http = ws.Http;
+var Mtom = ws.Mtom;
+var config = require('./config');
+var path = require('path');
 
 var options;
 
@@ -19,71 +19,95 @@ function setMottaker() {
 }
 
 function setDokumenter() {
-  var dokumenter = ''
-  options.dokumenter.forEach(function(dokument){
+  var dokumenter = '';
+  options.dokumenter.forEach(function(dokument) {
     dokumenter += '<dokumenter>' +
                   '<data></data>' +
                   '<filnavn>' + path.basename(dokument.filsti) + '</filnavn>' +
                   '<mimetype>' + dokument.mimetype + '</mimetype>' +
-                  '</dokumenter>'
+                  '</dokumenter>';
   });
   return dokumenter
 }
 
 function basicAuth () {
-  var auth = 'Basic ' + new Buffer(config.svarut.username + ':' + config.svarut.password).toString('base64');
+  var auth = 'Basic ' + new Buffer(config.svarut.username + ':' +
+    config.svarut.password).toString('base64');
   return auth
 }
 
 function buildXml() {
   var xml = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
-                    '<soap:Body>' +
-                      '<ns2:sendForsendelse xmlns:ns2="http://www.ks.no/svarut/services">' +
-                        '<forsendelse>' +
-                          '<avgivendeSystem>' + config.system.avgivendeSystem + '</avgivendeSystem>' +
-                          '<konteringskode>' + config.system.konteringskode + '</konteringskode>' +
-                          setDokumenter() +
-                          '<krevNiva4Innlogging>' + config.system.krevNiva4Innlogging + '</krevNiva4Innlogging>' +
-                          '<kryptert>' + config.system.kryptert  +  '</kryptert>' +
-                          '<kunDigitalLevering>' + config.system.kunDigitalLevering + '</kunDigitalLevering>' +
-                          '<mottaker xsi:type="ns2:privatPerson" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
-                          setMottaker() +
-                          '</mottaker>' +
-                          '<printkonfigurasjon>' +
-                            '<brevtype>' + config.system.brevtype + '</brevtype>' +
-                            '<fargePrint>' + config.system.fargePrint + '</fargePrint>' +
-                            '<tosidig>' + config.system.tosidig + '</tosidig>' +
-                          '</printkonfigurasjon>' +
-                          '<tittel>' + options.tittel + '</tittel>' +
-                        '</forsendelse>' +
-                      '</ns2:sendForsendelse>' +
-                    '</soap:Body>' +
-              '</soap:Envelope>'
+            '<soap:Body>' +
+            '<ns2:sendForsendelse xmlns:ns2="http://www.ks.no/svarut/services">' +
+            '<forsendelse>' +
+            '<avgivendeSystem>' +
+            config.system.avgivendeSystem +
+            '</avgivendeSystem>' +
+            '<konteringskode>' +
+            config.system.konteringskode +
+            '</konteringskode>' +
+            setDokumenter() +
+            '<krevNiva4Innlogging>' +
+            config.system.krevNiva4Innlogging +
+            '</krevNiva4Innlogging>' +
+            '<kryptert>' +
+            config.system.kryptert  +
+            '</kryptert>' +
+            '<kunDigitalLevering>' +
+            config.system.kunDigitalLevering +
+            '</kunDigitalLevering>' +
+            '<mottaker xsi:type="ns2:privatPerson"' +
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+            setMottaker() +
+            '</mottaker>' +
+            '<printkonfigurasjon>' +
+            '<brevtype>' +
+            config.system.brevtype +
+            '</brevtype>' +
+            '<fargePrint>' +
+            config.system.fargePrint +
+            '</fargePrint>' +
+            '<tosidig>' +
+            config.system.tosidig +
+            '</tosidig>' +
+            '</printkonfigurasjon>' +
+            '<tittel>' +
+            options.tittel +
+            '</tittel>' +
+            '</forsendelse>' +
+            '</ns2:sendForsendelse>' +
+            '</soap:Body>' +
+            '</soap:Envelope>'
   return xml
 }
 
 function buildRequest() {
-  var ctx = { request: buildXml()
-            , url: config.svarut.url
-            , action: config.svarut.action
-            , contentType: "application/soap+xml"
-            , auth: basicAuth()
-           }
+  var ctx = {
+              request: buildXml(),
+              url: config.svarut.url,
+              action: config.svarut.action,
+              contentType: 'application/soap+xml',
+              auth: basicAuth()
+            }
   return ctx
 }
 
 function addFiles(ctx) {
-    var i = 0, xpath = ''
-    options.dokumenter.forEach(function(dokument){
-      i++;
-      xpath = '//data[' + i + ']'
-      ws.addAttachment(ctx, "request", xpath, dokument.filsti, dokument.mimetype)
-    });
+  var i = 0;
+  var xpath = '';
+
+  options.dokumenter.forEach(function(dokument) {
+    i++;
+    xpath = '//data[' + i + ']';
+    ws.addAttachment(ctx, 'request', xpath, dokument.filsti, dokument.mimetype);
+  });
 }
 
 function send(ctx, callback) {
-  var handlers = [ new Mtom() //Mtom must be after everything except http
-                 , new Http()
+  var handlers = [
+                   new Mtom(),
+                   new Http()
                  ]
   ws.send(handlers, ctx, function(page) {
     return callback(page)
