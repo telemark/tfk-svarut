@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var config = {
   svarut: {
@@ -17,5 +17,5 @@ var config = {
     fargePrint: 'true',
     tosidig: 'false'
   }
-}
+};
 module.exports = config;

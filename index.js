@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var S = require('string');
 var ws = require('ws.js');
@@ -24,8 +24,8 @@ function setMottaker() {
                  '</poststed>' +
                  '<fodselsnr>' +
                  options.mottaker.fodselsnr +
-                 '</fodselsnr>'
-  return mottaker
+                 '</fodselsnr>';
+  return mottaker;
 }
 
 function setDokumenter() {
@@ -42,13 +42,13 @@ function setDokumenter() {
                   '</mimetype>' +
                   '</dokumenter>';
   });
-  return dokumenter
+  return dokumenter;
 }
 
 function basicAuth () {
   var auth = 'Basic ' + new Buffer(config.svarut.username + ':' +
     config.svarut.password).toString('base64');
-  return auth
+  return auth;
 }
 
 function buildXml() {
@@ -93,8 +93,8 @@ function buildXml() {
             '</forsendelse>' +
             '</ns2:sendForsendelse>' +
             '</soap:Body>' +
-            '</soap:Envelope>'
-  return xml
+            '</soap:Envelope>';
+  return xml;
 }
 
 function buildRequest() {
@@ -104,8 +104,8 @@ function buildRequest() {
               action: config.svarut.action,
               contentType: 'application/soap+xml',
               auth: basicAuth()
-            }
-  return ctx
+            };
+  return ctx;
 }
 
 function addFiles(ctx) {
@@ -123,9 +123,9 @@ function send(ctx, callback) {
   var handlers = [
                    new Mtom(),
                    new Http()
-                 ]
+                 ];
   ws.send(handlers, ctx, function(page) {
-    return callback(page)
+    return callback(page);
   });
 }
 
@@ -133,18 +133,18 @@ function send(ctx, callback) {
 function SvarUt(opts, callback) {
 
   options = opts;
-  var id = ''
+  var id = '';
 
-  this.ctx = buildRequest()
+  this.ctx = buildRequest();
 
-  addFiles(this.ctx)
+  addFiles(this.ctx);
 
   send(this.ctx, function(page) {
     if (!page || !page.response) {
-      return callback('Error: Something wrong happend', null)
+      return callback('Error: Something wrong happend', null);
     } else {
       id = S(page.response).between('<return>', '</return>').s;
-      return callback(null, id)
+      return callback(null, id);
     }
   });
 }
