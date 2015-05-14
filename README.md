@@ -8,7 +8,7 @@ npm install
 ```javascript
 'use strict'
 
-var svarUt = require('svarut.js')
+var svarUt = require('tfk-svarut')
 var options = {
                mottaker:
                  { navn : 'Terje Tverrtryne',
