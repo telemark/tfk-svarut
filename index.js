@@ -46,14 +46,6 @@ function setDokumenter() {
   return dokumenter;
 }
 
-function setBasicAuth () {
-  var auth = 'Basic ' +
-    new Buffer(config.svarut.username +
-        ':' +
-        config.svarut.password).toString('base64');
-  return auth;
-}
-
 function buildXmlReq() {
   var xml = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
     '<soap:Body>' +
@@ -106,7 +98,6 @@ function buildRequest() {
     url: config.svarut.url,
     action: config.svarut.action,
     contentType: 'application/soap+xml',
-    auth: setBasicAuth()
   };
   return ctx;
 }
@@ -127,10 +118,10 @@ function send(ctx, callback) {
     new Mtom(),
     new Http()
   ];
-  
+
   ws.send(handlers, ctx, function(page) {
     if (!page.response) {
-      return callback('Error: Could not get response', null);
+      return callback(page.error, null);
     }
     return callback(null, page);
   });
@@ -158,6 +149,9 @@ function SvarUt(opts, callback) {
 
   addFiles(this.ctx);
   send(this.ctx, function(err, page) {
+    if (err) {
+      callback(err, null);
+    }
     checkResponse(page.response, function(err, id) {
       if (err) {
         return callback(err, null);

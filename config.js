@@ -2,9 +2,7 @@
 
 var config = {
   svarut: {
-    username: 'username',
-    password: 'password',
-    url: 'https://test.svarut.ks.no/tjenester/forsendelseservice/ForsendelsesServiceV4',
+    url: 'https://username:password@test.svarut.ks.no/tjenester/forsendelseservice/ForsendelsesServiceV4',
     action: 'http://www.ks.no/svarut/services/ForsendelsesServiceV4/sendForsendelse'
   },
   system: {

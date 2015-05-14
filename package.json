@@ -33,7 +33,7 @@
     "url": "http://github.com/telemark/tfk-svarut/issues"
   },
   "dependencies": {
-    "ws.js": "git+https://github.com/telemark/ws.js",
+    "ws.js": "^0.0.20",
     "string": "^3.1.1"
   }
 }
