@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var config = {
   svarut: {
@@ -8,7 +8,7 @@ var config = {
     action: 'http://www.ks.no/svarut/services/ForsendelsesServiceV4/sendForsendelse'
   },
   system: {
-    avgivendeSystem: 'Angivende system',
+    avgivendeSystem: 'Skoleskyss',
     krevNiva4Innlogging: 'false',
     kryptert: 'false',
     kunDigitalLevering: 'false',
@@ -17,5 +17,5 @@ var config = {
     fargePrint: 'true',
     tosidig: 'false'
   }
-};
+}
 module.exports = config;
