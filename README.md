@@ -1,4 +1,6 @@
 # tfk-svarut
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/telemark/tfk-svarut.svg)](https://greenkeeper.io/)
 SvarUt for digitale skjemaer.
 
 ## Installation
